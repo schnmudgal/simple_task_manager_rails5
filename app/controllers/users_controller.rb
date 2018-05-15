@@ -3,6 +3,7 @@ class UsersController < ApplicationController
   skip_before_action :authenticate_user!, only: [:new, :create]
   before_action :find_user, only: [:edit, :update, :show]
   before_action :ensure_current_user, only: [:edit, :update]
+  before_action :ensure_no_session, only: [:new, :create]
 
   def index
     @users = User.all
@@ -25,7 +26,7 @@ class UsersController < ApplicationController
   end
 
   def update
-    if @user.save
+    if @user.update(user_params)
       redirect_to user_path(current_user), notice: t('controllers.users.success.update')
     else
       render :edit
@@ -48,6 +49,10 @@ class UsersController < ApplicationController
 
   def ensure_current_user
     redirect_to(users_path, alert: t('controllers.users.failure.not_current_user')) unless @user.id == current_user.id
+  end
+
+  def ensure_no_session
+    redirect_to(users_path, alert: t('controllers.users.failure.user_session_present')) if current_user
   end
 
 end

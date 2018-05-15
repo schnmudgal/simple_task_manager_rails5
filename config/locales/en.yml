@@ -50,6 +50,7 @@ en:
       failure:
         not_found: 'User not found!'
         not_current_user: 'Not authorised!'
+        user_session_present: 'User already signed in. Please signout first to continue!'
 
     tasks:
       success:
