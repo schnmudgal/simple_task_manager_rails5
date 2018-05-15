@@ -30,4 +30,32 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  controllers:
+    application:
+      failure:
+        not_authenticated: 'Not authenticated. Please login to continue!'
+
+    sessions:
+      success:
+        create: 'Logged in successfully.'
+        destroy: 'Logged out successfully.'
+      failure:
+        invalid_credentials: 'Invalid email/password combination!'
+        not_found: 'User not found!'
+
+    users:
+      success:
+        create: 'Signed up successfully. Please login now to continue.'
+        update: 'User updated successfully.'
+      failure:
+        not_found: 'User not found!'
+        not_current_user: 'Not authorised!'
+
+    tasks:
+      success:
+        create: 'Task created successfully.'
+        destroy: 'Task destroyed successfully.'
+      failure:
+        destroy: 'Something went wrong! Please try again later.'
+        not_found: 'Task not found!'
+

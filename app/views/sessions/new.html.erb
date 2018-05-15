@@ -1,0 +1,28 @@
+<div class="page-header">
+  <h1>Login</h1>
+</div>
+
+<%= form_tag session_path, :class => "form-horizontal user" do %>
+
+  <div class="form-group">
+    <%= label :user, :email, :class => 'control-label col-lg-2' %>
+    <div class="col-lg-10">
+      <%= text_field :user, :email, :class => 'form-control' %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= label :user, :password, :class => 'control-label col-lg-2' %>
+    <div class="col-lg-10">
+      <%= password_field :user, :password, :class => 'form-control' %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-lg-offset-2 col-lg-10">
+      <%= submit_tag 'Signin', :class => 'btn btn-primary' %>
+      <%= link_to 'Signup', new_user_path, :class => 'btn btn-default' %>
+    </div>
+  </div>
+
+<% end %>

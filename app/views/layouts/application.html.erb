@@ -1,15 +1,82 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <title>TaskManager</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= content_for?(:title) ? yield(:title) : "TaskManager" %></title>
     <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_link_tag "application", :media => "all" %>
+
+    <%= javascript_include_tag "application" %>
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.2/html5shiv.min.js" type="text/javascript"></script>
+    <![endif]-->
   </head>
-
   <body>
-    <%= yield %>
+
+    <div class="navbar navbar-default navbar-static-top">
+      <div class="container">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/">TaskManager</a>
+        <div class="navbar-collapse collapse navbar-responsive-collapse">
+          <ul class="nav navbar-nav">
+            <%- if current_user -%>
+              <li><%= link_to 'Logout', session_path, method: :delete %></li>
+            <%- else -%>
+              <li><%= link_to 'Login', new_session_path %></li>
+              <li><%= link_to 'Signup', new_user_path %></li>
+            <%- end -%>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-9">
+          <%= bootstrap_flash %>
+          <%= yield %>
+        </div>
+        <div class="col-lg-3">
+          <div class="well sidebar-nav">
+            <h3>Details</h3>
+            <% if current_user %>
+              <ul class="nav nav-list">
+                <li class="nav-header">Tasks</li>
+                <% tasks = Task.all %>
+                <% if tasks.blank? %>
+                  <li><a href="javascript:void">No tasks yet.</a></li>
+                <% end %>
+                <% tasks.each do |task| %>
+                  <li><%= link_to "Task ##{ task.id }", task_path(task) %></li>
+                <% end %>
+              </ul>
+              <ul class="nav nav-list">
+                <li class="nav-header">Users</li>
+                <% users = User.all %>
+                <% if users.blank? %>
+                  <li>No users yet.</li>
+                <% end %>
+                <% users.each do |user| %>
+                  <li><%= link_to "User ##{ user.id }", user_path(user) %></li>
+                <% end %>
+              </ul>
+            <% else %>
+              <span>Please <%= link_to 'login', new_session_path %>/<%= link_to 'signup', new_user_path %> to see details</span>
+            <% end %>
+          </div><!--/.well -->
+        </div><!--/span-->
+      </div><!--/row-->
+
+    </div> <!-- /container -->
+
   </body>
 </html>

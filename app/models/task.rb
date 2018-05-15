@@ -5,12 +5,14 @@ class Task < ApplicationRecord
 
   # Validations
   validates :start, :end, :description, presence: true
-  validates :start_is_less_than_end
+  validate :start_is_less_than_end
 
   # Private instance methods
   def start_is_less_than_end
-    if self.start > self.end
-      errors.add(:start, 'must be before end time.')
+    if self.start && self.end       # mimicing "allow_nil: true" for custom validation
+      if self.start >= self.end
+        errors.add(:start, 'must be before end time.')
+      end
     end
   end
 
